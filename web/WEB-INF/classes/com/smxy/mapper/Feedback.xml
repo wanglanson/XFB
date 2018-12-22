@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="com.smxy.mapper.FeedbackMapper">
+        <resultMap type="Feedback" id="feedbackMap">
+            <id property="id" column="id"/>
+            <result property="title" column="title"/>
+            <result property="content" column="content"/>
+            <result property="date" column="date"/>
+        </resultMap>
+        <insert id="addFeedback" parameterType="Feedback" >
+            insert into feedback_ (user,title,content,date) values (#{user},#{title},#{content},#{date})
+        </insert>
+        <delete id="delFeedback" parameterType="Feedback" >
+            delete from feedback_ where title= #{title}
+        </delete>
+        <select id="allFeedback" resultMap="feedbackMap">
+            select * from  feedback_ order by id desc
+        </select>
+    </mapper>

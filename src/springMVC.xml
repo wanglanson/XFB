@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+	<context:annotation-config></context:annotation-config>
+	<context:component-scan base-package="com.smxy.controller">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<!-- <mvc:resources mapping="**.css" location="/"/>
+	<mvc:resources mapping="**.js" location="/"/>
+	<mvc:resources mapping="**.jpg" location="/"/>
+	<mvc:resources mapping="**.png" location="/"/> -->
+
+	<!--多媒体解析器-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="8388608"></property>
+	</bean>
+	<!-- 视图定位 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	<!-- 拦截器定义 -->
+	<mvc:interceptors>
+		<!-- 定义一个拦截器 -->
+		<mvc:interceptor>
+
+			<!-- path配置</**>拦截所有请求，包括二级以上目录，</*>拦截所有请求，不包括二级以上目录 -->
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/userlogin.do"></mvc:exclude-mapping>
+			<bean class="com.smxy.interceptor.MyInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+</beans>

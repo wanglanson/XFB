@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+    <mapper namespace="com.smxy.mapper.DeviceMapper">
+        <insert id="addDevice" parameterType="Device" >
+            insert into device_ (name,deviceId,deviceName) values (#{name},#{deviceId},#{deviceName})
+        </insert>
+         
+        <delete id="delDevice" parameterType="Device" >
+            delete from device_ where deviceId= #{deviceId} and name=#{name}
+        </delete>
+        <update id="updateDevice" parameterType="Device" >
+            update device_ set deviceId=#{deviceId} where name=#{name}
+        </update>
+        <select id="listDevice" resultType="Device">
+            select * from  device_  where name=#{name}
+        </select>
+    <select id="findDevice" resultType="Device">
+            select * from device_  where deviceId=#{deviceId}
+        </select>
+    </mapper>
